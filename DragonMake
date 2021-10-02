@@ -1,0 +1,19 @@
+name: NoTimeToWait
+description: Removes the annoying "Please wait 2 minutes to join a game" message in Among Us
+icmd: killall -9 SpringBoard
+id: com.funnynumber.notimetowait
+version: 1.0
+author: funnynumber
+depends: mobilesubstrate
+
+all:
+    targetvers: 13.0
+    archs:
+        - arm64
+        - arm64e
+
+NoTimeToWait:
+    type: tweak
+    cflags: --std=c++17 -w
+    files:
+        - "Tweak.xm"
