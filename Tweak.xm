@@ -16,8 +16,7 @@ const char* GetRealIl2CppFrameworkAddress() {
 
 bool InitializeIl2CppApi() {
     auto image = MSGetImageByName(GetRealIl2CppFrameworkAddress());
-    #define FIND_API(a) *(void**)&a = MSFindSymbol(image, "_"#a); \
-    if(!a) return false
+    #define FIND_API(a) *(void**)&a = MSFindSymbol(image, "_"#a); if(!a) return false
     FIND_API(il2cpp_class_from_name);
     FIND_API(il2cpp_domain_get);
     FIND_API(il2cpp_assembly_get_image);
@@ -61,6 +60,7 @@ static void onLaunchApp(CFNotificationCenterRef center, void *observer, CFString
         auto method = (void**)FindMethod(klass, "get_AmBanned", 0);
         if(!method) return;
         *method = (void*)&RetFalse;
+        initialized = true;
     }
 }
 
