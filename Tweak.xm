@@ -6,7 +6,6 @@ void* (*il2cpp_domain_get)();
 void* (*il2cpp_assembly_get_image)(const void* assembly);
 void* (*il2cpp_class_get_method_from_name)(const void *klass, const char* name, int argsCount);
 void** (*il2cpp_domain_get_assemblies)(void* domain, size_t* size);
-
 bool initialized = false;
 
 const char* GetRealIl2CppFrameworkAddress() {
@@ -34,10 +33,11 @@ void* GetClassByName(const char* namezpace, const char* name) {
     if(!assemblies) return nullptr;
     for(auto i = 0; i < assemblyCount; i++) {
         auto assembly = assemblies[i];
-        if(!assembly) return nullptr;
+        if(!assembly) continue;
         auto image = il2cpp_assembly_get_image(assembly);
-        if(!image) return nullptr;
+        if(!image) continue;
         auto klass = il2cpp_class_from_name(image, namezpace, name);
+        if(!klass) continue;
         return klass;
     }
     return nullptr;
